@@ -1,3 +1,22 @@
+export type User = {
+  username: string;
+  name: string;
+  image: string;
+};
+
+export type Reply = {
+  content: string;
+  replyingTo: string;
+  user: User;
+};
+
+export type Comment = {
+  id: number;
+  content: string;
+  user: User;
+  replies?: Reply[];
+};
+
 export type ProductReq = {
   id: number;
   title: string;
@@ -6,25 +25,5 @@ export type ProductReq = {
   upvoted: boolean;
   status: string;
   description: string;
-};
-
-export type Comment = {
-  id: number;
-  product_id: number;
-  content: string;
-  username: string;
-};
-
-export type Reply = {
-  id: string;
-  comment: number;
-  username: string;
-  content: string;
-  replyingTo: string;
-};
-
-export type User = {
-  username: string;
-  name: string;
-  image: string;
+  comments?: Comment[];
 };
