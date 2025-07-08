@@ -12,6 +12,7 @@ export type Reply = {
 
 export type Comment = {
   id: number;
+  product_id: number;
   content: string;
   user: User;
   replies?: Reply[];
