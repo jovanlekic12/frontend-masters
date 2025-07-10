@@ -1,4 +1,5 @@
 import { fetchProductRequests } from "../../../../../api/product-reqs";
+import Loader from "../../../../../components/Loader";
 import { useFetchData } from "../../../../../hooks/useFetchData";
 import { FaAngleUp } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
@@ -7,6 +8,7 @@ export default function ProductsList() {
   console.log(reqs);
   return (
     <ul className="flex flex-col list-none gap-7 mt-5">
+      {isLoading && <Loader />}
       {reqs &&
         reqs.map((req) => {
           return (
