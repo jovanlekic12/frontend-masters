@@ -1,10 +1,18 @@
+import { useSearchParams } from "react-router";
 import { fetchProductRequests } from "../../../../../api/product-reqs";
 import Loader from "../../../../../components/Loader";
 import { useFetchData } from "../../../../../hooks/useFetchData";
 import { FaAngleUp } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
+import { useCallback } from "react";
 export default function ProductsList() {
-  const { data: reqs, isLoading } = useFetchData(fetchProductRequests);
+  const [params] = useSearchParams();
+
+  const getReqs = useCallback(() => {
+    return fetchProductRequests(params);
+  }, [params]);
+
+  const { data: reqs, isLoading } = useFetchData(getReqs);
   console.log(reqs);
   return (
     <ul className="flex flex-col list-none gap-7 mt-5">
