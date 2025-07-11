@@ -13,3 +13,8 @@ function App() {
 }
 
 export default App;
+
+//buttone i cijeli UI folder sredit
+//redux setUpovati, loadati paraleelno requestove na home page
+//responsive odraditi odma
+//infite schroll custom hook
