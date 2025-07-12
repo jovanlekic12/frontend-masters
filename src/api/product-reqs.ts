@@ -7,7 +7,7 @@ export const fetchProductRequests = async (
   let query = supabase.from("product-requests").select("*,comments(id)");
 
   const category = params.get("category");
-  if (category !== "all") {
+  if (category !== "all" && category) {
     query = query.eq("category", category);
   }
   const sort = params.get("sortBy");
