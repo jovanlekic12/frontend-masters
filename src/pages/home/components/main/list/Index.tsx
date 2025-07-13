@@ -1,22 +1,39 @@
 import { useSearchParams } from "react-router";
 import { fetchProductRequests } from "../../../../../api/product-reqs";
 import Loader from "../../../../../components/Loader";
-import { useFetchData } from "../../../../../hooks/useFetchData";
 import { FaAngleUp } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
+import type { ProductReq } from "../../../../../utils/types";
+import { useInfiniteScroll } from "../../../../../hooks/useInfiniteScroll";
+
+const PAGE_SIZE = 10;
+
 export default function ProductsList() {
   const [params] = useSearchParams();
+  const [reqs, setReqs] = useState<ProductReq[]>([]);
+  const [page, setPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
 
-  const getReqs = useCallback(() => {
-    return fetchProductRequests(params);
-  }, [params]);
-
-  const { data: reqs, isLoading } = useFetchData(getReqs);
-  console.log(reqs);
+  const loadMore = useCallback(async () => {
+    setIsLoading(true);
+    const newItems = await fetchProductRequests(params, page, PAGE_SIZE);
+    setReqs((prev) => [...prev, ...newItems]);
+    setPage((prev) => prev + 1);
+    if (newItems.length < PAGE_SIZE) {
+      setHasMore(false);
+    }
+    setIsLoading(false);
+  }, [page, params]);
+  console.log(params);
+  const sentinelRef = useInfiniteScroll({
+    callback: loadMore,
+    isLoading,
+    hasMore,
+  });
   return (
     <ul className="flex flex-col list-none gap-7 mt-5">
-      {isLoading && <Loader />}
       {reqs &&
         reqs.map((req) => {
           return (
@@ -43,6 +60,8 @@ export default function ProductsList() {
             </li>
           );
         })}
+      {isLoading && <Loader />}
+      <div ref={sentinelRef} style={{ height: "1px" }} />
     </ul>
   );
 }

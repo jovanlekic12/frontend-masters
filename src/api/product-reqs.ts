@@ -2,14 +2,20 @@ import { supabase } from "../supabase/supabase";
 import type { ProductReq } from "../utils/types";
 
 export const fetchProductRequests = async (
-  params: URLSearchParams
+  params: URLSearchParams,
+  page: number,
+  pageSize: number
 ): Promise<ProductReq[]> => {
-  let query = supabase.from("product-requests").select("*,comments(id)");
+  let query = supabase
+    .from("product-requests")
+    .select("*,comments(id)")
+    .range(page * pageSize, page * pageSize + pageSize - 1);
 
   const category = params.get("category");
   if (category !== "all" && category) {
     query = query.eq("category", category);
   }
+
   const sort = params.get("sortBy");
   switch (sort) {
     case "likes-asc":
@@ -18,12 +24,6 @@ export const fetchProductRequests = async (
     case "likes-desc":
       query = query.order("upvotes", { ascending: false });
       break;
-    // case "comments-asc":
-    //   query = query.order("comments", { ascending: true });
-    //   break;
-    // case "comments-desc":
-    //   query = query.order("comments", { ascending: false });
-    //   break;
   }
 
   const { data, error } = await query;
