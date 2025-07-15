@@ -3,7 +3,7 @@ import { fetchProductRequests } from "../../../../../api/product-reqs";
 import Loader from "../../../../../components/Loader";
 import { FaAngleUp } from "react-icons/fa";
 import { FaRegCommentDots } from "react-icons/fa";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import type { ProductReq } from "../../../../../utils/types";
 import { useInfiniteScroll } from "../../../../../hooks/useInfiniteScroll";
 
@@ -16,16 +16,25 @@ export default function ProductsList() {
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  useEffect(() => {
+    setReqs([]);
+    setPage(0);
+    setHasMore(true);
+  }, [params]);
+
   const loadMore = useCallback(async () => {
+    if (isLoading || !hasMore) return;
     setIsLoading(true);
     const newItems = await fetchProductRequests(params, page, PAGE_SIZE);
-    setReqs((prev) => [...prev, ...newItems]);
+
+    setReqs((prev) => (page === 0 ? newItems : [...prev, ...newItems]));
     setPage((prev) => prev + 1);
     if (newItems.length < PAGE_SIZE) {
       setHasMore(false);
     }
     setIsLoading(false);
-  }, [page, params]);
+  }, [page, params, isLoading, hasMore]);
+
   console.log(params);
   const sentinelRef = useInfiniteScroll({
     callback: loadMore,
