@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { MdOutlineLightbulb } from "react-icons/md";
 import { useNavigate, useSearchParams } from "react-router";
+import Button from "../../../../../components/ui/Button";
 
 export default function Header() {
   const sorts = [
@@ -46,9 +47,7 @@ export default function Header() {
           </select>
         </div>
       </div>
-      <button className="text-xl rounded-lg bg-purple-600 py-1 px-3 cursor-pointer">
-        Add Feedback
-      </button>
+      <Button type="primary">Add Feedback</Button>
     </header>
   );
 }

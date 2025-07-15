@@ -28,3 +28,5 @@ export type ProductReq = {
   description: string;
   comments?: Comment[];
 };
+
+export type Roadmap = { status: string; count: number };

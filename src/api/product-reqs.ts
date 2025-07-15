@@ -1,5 +1,6 @@
+import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../supabase/supabase";
-import type { ProductReq } from "../utils/types";
+import type { ProductReq, Roadmap } from "../utils/types";
 
 export const fetchProductRequests = async (
   params: URLSearchParams,
@@ -58,4 +59,26 @@ export const fetchFilters = async (): Promise<string[]> => {
   const uniqueCategories = Array.from(new Set(categories));
 
   return uniqueCategories;
+};
+export const fetchRoadmapCounts = async (): Promise<Roadmap[]> => {
+  const { data, error } = await supabase
+    .from("product-requests")
+    .select("status");
+
+  if (error || !data) {
+    console.error("Failed to fetch statuses:", error?.message);
+    return [];
+  }
+
+  const countsMap = new Map<string, number>();
+
+  for (const row of data as { status: string }[]) {
+    countsMap.set(row.status, (countsMap.get(row.status) || 0) + 1);
+  }
+
+  const result: Roadmap[] = Array.from(countsMap.entries()).map(
+    ([status, count]) => ({ status, count })
+  );
+
+  return result;
 };
