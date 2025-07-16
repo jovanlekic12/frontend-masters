@@ -1,35 +1,22 @@
 import { useEffect, useState } from "react";
 
-export function useFetchData<T>(fetchHandler: () => Promise<T>) {
+export function useFetchData<T>(...fetchHandlers: any) {
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState<T | null>();
+  const [data, setData] = useState<any[]>();
   const [error, setError] = useState<Error | null>(null);
+
   useEffect(() => {
-    let isMounted = true;
-
-    const fetchedData = async () => {
+    async function fetchData() {
       setIsLoading(true);
-      try {
-        const response = await fetchHandler();
-        if (isMounted) {
-          setData(response);
-        }
-      } catch (err: any) {
-        console.error("Fetching error:", err);
-        setError(err);
-      } finally {
-        if (isMounted) {
-          setIsLoading(false);
-        }
-      }
-    };
+      const promises = fetchHandlers.map((fn) => fn());
+      const results = await Promise.all(promises);
+      console.log(results);
+      setData(results);
+      setIsLoading(false);
+    }
 
-    fetchedData();
-
-    return () => {
-      isMounted = false;
-    };
-  }, [fetchHandler]);
+    fetchData();
+  }, []);
 
   return { isLoading, data, error };
 }
