@@ -1,4 +1,3 @@
-import type { PostgrestSingleResponse } from "@supabase/supabase-js";
 import { supabase } from "../supabase/supabase";
 import type { ProductReq, Roadmap } from "../utils/types";
 

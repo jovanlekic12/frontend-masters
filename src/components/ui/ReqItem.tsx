@@ -11,7 +11,7 @@ export default function ProductReqItem({
   return (
     <li className="flex items-center w-full justify-between px-5 py-2">
       <div className="flex items-center gap-2">
-        <div className="flex flex-col items-center px-2 py-2">
+        <div className="flex flex-col items-center px-2 py-2 min-w-15">
           <FaAngleUp className="text-blue-600" />
           <h5 className="text-black font-bold text-base">{upvotes}</h5>
         </div>
