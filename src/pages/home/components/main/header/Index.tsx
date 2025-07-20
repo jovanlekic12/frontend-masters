@@ -27,10 +27,10 @@ export default function Header() {
   return (
     <header className="rounded-2xl bg-blue-600 flex items-center justify-between py-6 px-5 text-white ">
       <div className="flex items-center gap-2.5">
-        <MdOutlineLightbulb className="text-x text-2xl" />
-        <h4 className="text-xl font-medium">Suggestions</h4>
+        <MdOutlineLightbulb className="text-xl" />
+        <h4 className="text-lg font-medium">Suggestions</h4>
         <div className="flex items-center gap-2.5">
-          <h4 className="text-xl font-medium">Sort by:</h4>
+          <h4 className="text-lg font-medium">Sort by:</h4>
           <select
             className="text-lg"
             onChange={(e) => handleSortChange(e.target.value, "sortBy")}
