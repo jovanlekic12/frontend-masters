@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { MdOutlineLightbulb } from "react-icons/md";
 import { useNavigate, useSearchParams } from "react-router";
 import Button from "../../../../../components/ui/Button";

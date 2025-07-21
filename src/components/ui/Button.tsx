@@ -1,7 +1,7 @@
 import type { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router";
 
-type ButtonType = "primary" | "secondary" | "small" | "round";
+type ButtonType = "primary" | "secondary" | "small" | "round" | "login";
 
 interface ButtonProps {
   children: ReactNode;
@@ -23,6 +23,7 @@ function Button({
 
   const styles: Record<ButtonType, string> = {
     primary: base + " px-5 py-3",
+    login: base + " w-full px-5 py-3",
     small: base + "px-4 py-2 md:px-5 md:py-2.5 text-xs",
     round: base + "px-2.5 py-1 md:px-3.5 md:py-2 text-sm",
     secondary:

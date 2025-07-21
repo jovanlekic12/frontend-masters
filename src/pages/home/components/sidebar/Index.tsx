@@ -7,6 +7,7 @@ import { useState } from "react";
 import Overlay from "../../../../components/ui/Overlay";
 
 export default function SideBar() {
+  //
   const isSmallScreen = useIsSmallScreen(1280);
   const [isOpened, setIsOpened] = useState(false);
   return (

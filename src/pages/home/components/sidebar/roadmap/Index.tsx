@@ -1,4 +1,4 @@
-import { useNavigate, useSearchParams } from "react-router";
+import { Link, useNavigate, useSearchParams } from "react-router";
 import Button from "../../../../../components/ui/Button";
 import type { Roadmap } from "../../../../../utils/types";
 import { useFetchData } from "../../../../../hooks/useFetchData";
@@ -19,13 +19,10 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
     { handler: fetchFilters },
     { handler: fetchRoadmapCounts }
   );
-
+  const [filters, roadmap] = data ?? [];
   const ref = useRef<HTMLDivElement>(null);
 
   useClickSidebar(ref, () => setIsOpened(false), isOpened);
-
-  const filters = data?.[0] ?? [];
-  const roadmap = data?.[1] ?? [];
 
   const [params] = useSearchParams();
   const navigate = useNavigate();
@@ -68,7 +65,12 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
         <div className="mt-5">
           <div className="flex items-center justify-between">
             <h6 className="font-semibold">Roadmap</h6>
-            <a className="text-blue-600 hover:underline cursor-pointer">View</a>
+            <Link
+              to="login"
+              className="text-blue-600 hover:underline cursor-pointer"
+            >
+              View
+            </Link>
           </div>
           <ul className="flex flex-col list-none gap-1 mt-5">
             {roadmap &&
