@@ -1,6 +1,6 @@
+import Button from "@/components/ui/Button";
 import { MdOutlineLightbulb } from "react-icons/md";
 import { useNavigate, useSearchParams } from "react-router";
-import Button from "../../../../../components/ui/Button";
 
 export default function Header() {
   const sorts = [

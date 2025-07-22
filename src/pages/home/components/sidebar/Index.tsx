@@ -1,10 +1,10 @@
 import { FaBars } from "react-icons/fa";
-import Button from "../../../../components/ui/Button";
 
-import useIsSmallScreen from "../../../../hooks/useIsSmallScreen";
 import SidebarRoadmap from "./roadmap/Index";
 import { useState } from "react";
-import Overlay from "../../../../components/ui/Overlay";
+import Overlay from "@/components/ui/Overlay";
+import Button from "@/components/ui/Button";
+import useIsSmallScreen from "@/hooks/useIsSmallScreen";
 
 export default function SideBar() {
   //

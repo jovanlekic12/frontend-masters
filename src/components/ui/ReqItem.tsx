@@ -1,5 +1,5 @@
+import { ProductReq } from "@/utils/types";
 import { FaAngleUp, FaRegCommentDots } from "react-icons/fa";
-import type { ProductReq } from "../../utils/types";
 
 export default function ProductReqItem({
   upvotes,

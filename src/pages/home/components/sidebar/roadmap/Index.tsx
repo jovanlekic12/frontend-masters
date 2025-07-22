@@ -1,13 +1,10 @@
 import { Link, useNavigate, useSearchParams } from "react-router";
-import Button from "../../../../../components/ui/Button";
-import type { Roadmap } from "../../../../../utils/types";
-import { useFetchData } from "../../../../../hooks/useFetchData";
-import {
-  fetchFilters,
-  fetchRoadmapCounts,
-} from "../../../../../api/product-reqs";
 import { useRef } from "react";
-import { useClickSidebar } from "../../../../../hooks/useClickOutside";
+import { fetchFilters, fetchRoadmapCounts } from "@/api/product-reqs";
+import { useFetchData } from "@/hooks/useFetchData";
+import { useClickSidebar } from "@/hooks/useClickOutside";
+import Button from "@/components/ui/Button";
+import { Roadmap } from "@/utils/types";
 
 type Props = {
   isOpened: boolean;
