@@ -1,8 +1,11 @@
+import { logInUser } from "@/api/login";
 import Button from "@/components/ui/Button";
+import { LogInProps } from "@/utils/types";
+import { useState } from "react";
 import { MdOutlineLightbulb } from "react-icons/md";
 import { useNavigate, useSearchParams } from "react-router";
 
-export default function Header() {
+export default function Header({ setToken }: LogInProps) {
   const sorts = [
     { label: "Most likes", value: "likes-desc" },
     { label: "Least likes", value: "likes-asc" },
@@ -12,6 +15,7 @@ export default function Header() {
 
   const [params] = useSearchParams();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSortChange = (sort: string, name: string) => {
     const newParams = new URLSearchParams(params.toString());
@@ -22,6 +26,20 @@ export default function Header() {
     }
     navigate({ search: newParams.toString() });
   };
+
+  async function SetUser() {
+    setIsLoading(true);
+    try {
+      const { data, error } = await logInUser();
+      if (error) {
+        console.error("Login failed:", error.message);
+      } else {
+        console.log(data);
+      }
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
   return (
     <header className="rounded-2xl bg-blue-600 flex items-center justify-between py-6 px-5 text-white ">
@@ -46,7 +64,9 @@ export default function Header() {
           </select>
         </div>
       </div>
-      <Button type="primary">Add Feedback</Button>
+      <Button type="primary" onClick={SetUser}>
+        Add Feedback
+      </Button>
     </header>
   );
 }
