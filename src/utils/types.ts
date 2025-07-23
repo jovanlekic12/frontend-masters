@@ -40,4 +40,5 @@ export type Roadmap = { status: string; count: number };
 
 export type LogInProps = {
   setToken: Dispatch<SetStateAction<Token | null>>;
+  token: Token;
 };

@@ -23,7 +23,6 @@ function App() {
           session: session,
           user: session.user,
         };
-
         setToken(tokenData);
         localStorage.setItem("supabase.session", JSON.stringify(session));
       } else {
@@ -43,7 +42,7 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route index element={<Home setToken={setToken} />} />
+        <Route index element={<Home setToken={setToken} token={token} />} />
       </Routes>
     </BrowserRouter>
   );

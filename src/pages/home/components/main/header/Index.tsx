@@ -4,8 +4,10 @@ import { LogInProps } from "@/utils/types";
 import { useState } from "react";
 import { MdOutlineLightbulb } from "react-icons/md";
 import { useNavigate, useSearchParams } from "react-router";
-
-export default function Header({ setToken }: LogInProps) {
+import { FcGoogle } from "react-icons/fc";
+import { supabase } from "@/supabase/supabase";
+import { TbLogout2 } from "react-icons/tb";
+export default function Header({ setToken, token }: LogInProps) {
   const sorts = [
     { label: "Most likes", value: "likes-desc" },
     { label: "Least likes", value: "likes-asc" },
@@ -16,6 +18,24 @@ export default function Header({ setToken }: LogInProps) {
   const [params] = useSearchParams();
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Logout error:", error.message);
+      } else {
+        setToken(null);
+        sessionStorage.removeItem("token");
+        localStorage.removeItem("supabase.session");
+      }
+    } catch (error) {
+      console.error("Logout error:", error.message);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleSortChange = (sort: string, name: string) => {
     const newParams = new URLSearchParams(params.toString());
@@ -41,6 +61,8 @@ export default function Header({ setToken }: LogInProps) {
     }
   }
 
+  console.log(token);
+
   return (
     <header className="rounded-2xl bg-blue-600 flex items-center justify-between py-6 px-5 text-white ">
       <div className="flex items-center gap-2.5">
@@ -64,9 +86,20 @@ export default function Header({ setToken }: LogInProps) {
           </select>
         </div>
       </div>
-      <Button type="primary" onClick={SetUser}>
-        Add Feedback
-      </Button>
+      {!token && (
+        <Button type="secondary" onClick={SetUser}>
+          <FcGoogle />
+          Login
+        </Button>
+      )}
+      {token && (
+        <div className="flex items-center gap-2">
+          <Button type="primary">Add Feedback</Button>
+          <Button type="primary" onClick={handleLogout}>
+            {isLoading ? "Logging out..." : "Log out"} <TbLogout2 />
+          </Button>
+        </div>
+      )}
     </header>
   );
 }
