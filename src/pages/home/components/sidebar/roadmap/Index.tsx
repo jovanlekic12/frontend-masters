@@ -2,7 +2,7 @@ import { Link, useNavigate, useSearchParams } from "react-router";
 import { useRef } from "react";
 import { fetchFilters, fetchRoadmapCounts } from "@/api/product-reqs";
 import { useFetchData } from "@/hooks/useFetchData";
-import { useClickSidebar } from "@/hooks/useClickOutside";
+import { useOutsideClick } from "@/hooks/useClickOutside";
 import Button from "@/components/ui/Button";
 import { Roadmap } from "@/utils/types";
 
@@ -19,7 +19,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
   const [filters, roadmap] = data ?? [];
   const ref = useRef<HTMLDivElement>(null);
 
-  useClickSidebar(ref, () => setIsOpened(false), isOpened);
+  useOutsideClick(ref, () => setIsOpened(false), isOpened);
 
   const [params] = useSearchParams();
   const navigate = useNavigate();
@@ -41,7 +41,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
         isOpened
           ? "translate-x-[-50%] translate-y-[-50%]"
           : "translate-x-[500%] translate-y-[-50%]"
-      } duration-300 ease-in-out xl:translate-x-0 xl:relative xl:top-50 xl:left-0`}
+      } duration-300 ease-in-out xl:translate-x-0 xl:relative xl:top-50 xl:left-0 xl:z-10`}
     >
       <div className="grid grid-cols-2 gap-2">
         {filters?.map((filter: string) => {

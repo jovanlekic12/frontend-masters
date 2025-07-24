@@ -1,5 +1,6 @@
 import { supabase } from "../supabase/supabase";
 import type { ProductReq, Roadmap } from "../utils/types";
+import { toast } from "react-toastify";
 
 export const fetchProductRequests = async (
   params: URLSearchParams,
@@ -46,7 +47,7 @@ export const fetchFilters = async (): Promise<string[]> => {
     return [];
   }
 
-  const categories = ["all"];
+  const categories = [];
 
   if (Array.isArray(reqs)) {
     for (const req of reqs) {
@@ -80,4 +81,25 @@ export const fetchRoadmapCounts = async (): Promise<Roadmap[]> => {
   );
 
   return result;
+};
+
+export const InsertFeedback = async (product: ProductReq) => {
+  const { error } = await supabase.from("product-requests").insert([
+    {
+      id: 14,
+      title: product.title,
+      category: product.category,
+      upvotes: 0,
+      upvoted: false,
+      status: "suggestion",
+      description: product.description,
+    },
+  ]);
+  if (error) {
+    console.error("Error adding feedback", error);
+    toast.error("Something went wrong.");
+  } else {
+    toast.success("Feedback submitted successfully!");
+  }
+  return error;
 };

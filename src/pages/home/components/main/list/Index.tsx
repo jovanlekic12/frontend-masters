@@ -34,7 +34,6 @@ export default function ProductsList() {
     setIsLoading(false);
   }, [page, params, isLoading, hasMore]);
 
-  console.log(params);
   const sentinelRef = useInfiniteScroll({
     callback: loadMore,
     isLoading,

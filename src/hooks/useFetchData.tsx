@@ -13,7 +13,6 @@ export function useFetchData(...fetchHandlers: fetchHandler[]) {
       setIsLoading(true);
       const promises = fetchHandlers.map((fn) => fn.handler());
       const results = await Promise.all(promises);
-      console.log(results);
       setData(results);
       setIsLoading(false);
     }

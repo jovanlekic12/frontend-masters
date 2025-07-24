@@ -2,7 +2,7 @@ import { useEffect, type RefObject } from "react";
 
 type AnyEvent = MouseEvent | TouchEvent;
 
-export function useClickSidebar<T extends HTMLElement>(
+export function useOutsideClick<T extends HTMLElement>(
   ref: RefObject<T | null>,
   handler: (event: AnyEvent) => void,
   enabled: boolean = true

@@ -7,7 +7,12 @@ import { useNavigate, useSearchParams } from "react-router";
 import { FcGoogle } from "react-icons/fc";
 import { supabase } from "@/supabase/supabase";
 import { TbLogout2 } from "react-icons/tb";
-export default function Header({ setToken, token }: LogInProps) {
+
+type Props = LogInProps & {
+  setIsFormOpened: (isFormOpened: boolean) => void;
+};
+
+export default function Header({ setToken, token, setIsFormOpened }: Props) {
   const sorts = [
     { label: "Most likes", value: "likes-desc" },
     { label: "Least likes", value: "likes-asc" },
@@ -53,15 +58,11 @@ export default function Header({ setToken, token }: LogInProps) {
       const { data, error } = await logInUser();
       if (error) {
         console.error("Login failed:", error.message);
-      } else {
-        console.log(data);
       }
     } finally {
       setIsLoading(false);
     }
   }
-
-  console.log(token);
 
   return (
     <header className="rounded-2xl bg-blue-600 flex items-center justify-between py-6 px-5 text-white ">
@@ -94,7 +95,9 @@ export default function Header({ setToken, token }: LogInProps) {
       )}
       {token && (
         <div className="flex items-center gap-2">
-          <Button type="primary">Add Feedback</Button>
+          <Button type="primary" onClick={() => setIsFormOpened(true)}>
+            Add Feedback
+          </Button>
           <Button type="primary" onClick={handleLogout}>
             {isLoading ? "Logging out..." : "Log out"} <TbLogout2 />
           </Button>
