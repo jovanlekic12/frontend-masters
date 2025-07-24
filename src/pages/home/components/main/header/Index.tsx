@@ -79,7 +79,7 @@ export default function Header({ setToken, token, setIsFormOpened }: Props) {
               <option
                 key={sort.value}
                 value={sort.value}
-                className="bg-blue-600"
+                className="bg-white text-black"
               >
                 {sort.label}
               </option>

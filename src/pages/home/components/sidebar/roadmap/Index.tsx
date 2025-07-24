@@ -1,5 +1,5 @@
 import { Link, useNavigate, useSearchParams } from "react-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { fetchFilters, fetchRoadmapCounts } from "@/api/product-reqs";
 import { useFetchData } from "@/hooks/useFetchData";
 import { useOutsideClick } from "@/hooks/useClickOutside";
@@ -18,6 +18,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
   );
   const [filters, roadmap] = data ?? [];
   const ref = useRef<HTMLDivElement>(null);
+  const [activeBtn, setActiveBtn] = useState("all");
 
   useOutsideClick(ref, () => setIsOpened(false), isOpened);
 
@@ -32,6 +33,8 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
       newParams.delete("category");
     }
     navigate({ search: newParams.toString() });
+    setIsOpened(false);
+    setActiveBtn(filter);
   };
 
   return (
@@ -49,9 +52,9 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
             <Button
               onClick={() => {
                 handleFilterChange(filter);
-                setIsOpened(false);
               }}
               type="secondary"
+              isActive={activeBtn === filter}
             >
               {filter}
             </Button>

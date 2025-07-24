@@ -9,6 +9,7 @@ interface ButtonProps {
   to?: string;
   type: ButtonType;
   onClick?: MouseEventHandler<HTMLButtonElement>;
+  isActive?: boolean;
 }
 
 function Button({
@@ -17,6 +18,7 @@ function Button({
   to,
   type,
   onClick,
+  isActive,
 }: ButtonProps) {
   const base =
     " cursor-pointer text-md bg-purple-500 font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-purple-600 disabled:cursor-not-allowed disabled:bg-white disabled:border disabled:border-yellow-400";
@@ -26,8 +28,11 @@ function Button({
     login: base + " w-full px-5 py-3",
     small: base + "px-4 py-2 md:px-5 md:py-2.5 text-xs",
     round: base + " flex items-center justify-center w-9 h-9 rounded-[50%]",
-    secondary:
-      "flex items-center justify-center gap-2 capitalize bg-white text-blue-600 rounded-xl py-1 px-4 text-lg font-semibold hover:bg-blue-200 cursor-pointer duration-200",
+    secondary: `flex items-center justify-center gap-2 capitalize ${
+      isActive
+        ? "bg-blue-600 text-white"
+        : "bg-white text-blue-600 hover:bg-blue-200"
+    }  rounded-xl py-1 px-4 text-lg font-semibold cursor-pointer duration-200`,
   };
 
   if (to)
