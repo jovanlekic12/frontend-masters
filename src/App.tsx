@@ -4,7 +4,6 @@ import Home from "@/pages/home/Index";
 import { useEffect, useState } from "react";
 import { Token } from "./utils/types";
 import { supabase } from "./supabase/supabase";
-import { toast } from "react-toastify";
 
 function App() {
   const [token, setToken] = useState<Token | null>(null);

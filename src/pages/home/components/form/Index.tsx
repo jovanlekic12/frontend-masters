@@ -45,7 +45,8 @@ export default function FeedbackForm({ setIsFormOpened, isFormOpened }: Props) {
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await fetchFilters();
+      let data = await fetchFilters();
+      data.shift();
       setCategories(data);
       if (data.length) {
         reset({ title: "", category: data[0], description: "" });

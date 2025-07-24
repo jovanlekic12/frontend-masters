@@ -47,7 +47,7 @@ export const fetchFilters = async (): Promise<string[]> => {
     return [];
   }
 
-  const categories = [];
+  const categories = ["all"];
 
   if (Array.isArray(reqs)) {
     for (const req of reqs) {
@@ -86,7 +86,6 @@ export const fetchRoadmapCounts = async (): Promise<Roadmap[]> => {
 export const InsertFeedback = async (product: ProductReq) => {
   const { error } = await supabase.from("product-requests").insert([
     {
-      id: 14,
       title: product.title,
       category: product.category,
       upvotes: 0,
