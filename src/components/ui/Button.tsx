@@ -1,7 +1,13 @@
 import type { MouseEventHandler, ReactNode } from "react";
 import { Link } from "react-router";
 
-type ButtonType = "primary" | "secondary" | "small" | "round" | "login";
+type ButtonType =
+  | "primary"
+  | "secondary"
+  | "small"
+  | "round"
+  | "login"
+  | "upvote";
 
 interface ButtonProps {
   children: ReactNode;
@@ -28,6 +34,7 @@ function Button({
     login: base + " w-full px-5 py-3",
     small: base + "px-4 py-2 md:px-5 md:py-2.5 text-xs",
     round: base + " flex items-center justify-center w-9 h-9 rounded-[50%]",
+    upvote: `flex flex-col items-center rounded-xl cursor-pointer duration-200 hover:bg-blue-200 px-2 py-2 min-w-12`,
     secondary: `flex items-center justify-center gap-2 capitalize ${
       isActive
         ? "bg-blue-600 text-white"

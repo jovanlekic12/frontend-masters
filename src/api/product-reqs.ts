@@ -102,3 +102,20 @@ export const InsertFeedback = async (product: ProductReq) => {
   }
   return error;
 };
+
+export const feedbackUpvote = async (
+  id: string,
+  command: string,
+  newUpvotes: number
+) => {
+  if (command === "increment") {
+    const { error } = await supabase
+      .from("product-requests")
+      .update({ upvotes: newUpvotes })
+      .eq("id", id)
+      .select();
+    if (error) {
+      toast.error("Error upvoting this feedback");
+    }
+  }
+};

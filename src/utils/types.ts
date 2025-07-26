@@ -18,7 +18,7 @@ export type Reply = {
 };
 
 export type Comment = {
-  id: number;
+  id: string;
   product_id: number;
   content: string;
   user: MyUser;
@@ -26,7 +26,7 @@ export type Comment = {
 };
 
 export type ProductReq = {
-  id: number;
+  id: string;
   title: string;
   category: string;
   upvotes: number;
