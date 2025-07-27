@@ -103,19 +103,70 @@ export const InsertFeedback = async (product: ProductReq) => {
   return error;
 };
 
-export const feedbackUpvote = async (
-  id: string,
-  command: string,
-  newUpvotes: number
-) => {
-  if (command === "increment") {
-    const { error } = await supabase
-      .from("product-requests")
-      .update({ upvotes: newUpvotes })
-      .eq("id", id)
-      .select();
-    if (error) {
-      toast.error("Error upvoting this feedback");
-    }
+export const feedbackUpvote = async (id: string, newUpvotes: number) => {
+  const { error } = await supabase
+    .from("product-requests")
+    .update({ upvotes: newUpvotes })
+    .eq("id", id)
+    .select();
+  if (error) {
+    toast.error("Error upvoting this feedback");
   }
+};
+
+export const toogleUpvoteFeedback = async (feedbackId: string) => {
+  const {
+    data: { user },
+    error: userError,
+  } = await supabase.auth.getUser();
+
+  if (userError || !user) {
+    console.error("User not found", userError);
+    toast.error("Please login");
+    return;
+  }
+  try {
+    const { data: existing, error: fetchError } = await supabase
+      .from("upvotes")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("feedback_id", feedbackId)
+      .maybeSingle();
+    if (fetchError) {
+      console.error(fetchError);
+      return;
+    }
+    if (existing) {
+      const { error } = await supabase.from("upvotes").insert([
+        {
+          feedback_id: feedbackId,
+          user_id: user.id,
+        },
+      ]);
+      if (error) {
+        toast.error("Error adding upvote");
+        console.error(error);
+      }
+    } else {
+      const { error: deleteError } = await supabase
+        .from("upvotes")
+        .delete()
+        .eq("user_id", user.id)
+        .eq("feedback_id", feedbackId);
+      if (deleteError) {
+        console.error("Error removing upvote", deleteError);
+        toast.error("Error removing upvote");
+      }
+    }
+  } catch (er) {
+    console.error(er);
+  }
+};
+
+export const fetchUpvotes = async () => {
+  const { data, error } = await supabase.from("upvotes").select("*");
+  if (error) {
+    console.error(error);
+  }
+  return data;
 };

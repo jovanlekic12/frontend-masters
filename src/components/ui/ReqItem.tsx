@@ -1,7 +1,13 @@
-import { ProductReq } from "@/utils/types";
+import { ProductReq, Token, upvotedFeedback } from "@/utils/types";
 import { FaAngleUp, FaRegCommentDots } from "react-icons/fa";
 import Button from "./Button";
-import { feedbackUpvote } from "@/api/product-reqs";
+import { feedbackUpvote, toogleUpvoteFeedback } from "@/api/product-reqs";
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+
+type ProductReqItemProps = ProductReq & {
+  upvotedFeedbacks: upvotedFeedback[];
+};
 
 export default function ProductReqItem({
   id,
@@ -10,15 +16,40 @@ export default function ProductReqItem({
   description,
   category,
   comments,
-}: ProductReq) {
+  upvotedFeedbacks,
+}: ProductReqItemProps) {
+  const [isUpvoted, setIsUpvoted] = useState(false);
+
+  useEffect(() => {
+    if (upvotedFeedbacks) {
+      const contains = upvotedFeedbacks.some(
+        (feedback) => feedback.feedback_id === id
+      );
+      setIsUpvoted(contains);
+    }
+  }, [upvotedFeedbacks]);
+
+  async function handleUpvote() {
+    if (isUpvoted) {
+      await toogleUpvoteFeedback(id);
+      await handleDecrement();
+    } else {
+      await toogleUpvoteFeedback(id);
+      await handleIncrement();
+    }
+  }
+
   async function handleIncrement() {
-    await feedbackUpvote(id, "increment", upvotes + 1);
+    await feedbackUpvote(id, upvotes + 1);
+  }
+  async function handleDecrement() {
+    await feedbackUpvote(id, upvotes - 1);
   }
 
   return (
     <li className="flex items-center w-full justify-between px-5 py-2">
       <div className="flex items-center gap-4">
-        <Button type="upvote" onClick={handleIncrement}>
+        <Button type="upvote" onClick={handleUpvote} isActive={isUpvoted}>
           <FaAngleUp className="text-blue-600" />
           <h5 className="text-black font-bold text-base">{upvotes}</h5>
         </Button>

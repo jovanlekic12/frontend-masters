@@ -24,7 +24,6 @@ function App() {
           user: session.user,
         };
         setToken(tokenData);
-        console.log(tokenData);
         localStorage.setItem("supabase.session", JSON.stringify(session));
       } else {
         setToken(null);

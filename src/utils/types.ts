@@ -42,3 +42,8 @@ export type LogInProps = {
   setToken: Dispatch<SetStateAction<Token | null>>;
   token: Token;
 };
+
+export type upvotedFeedback = {
+  feedback_id: string;
+  user_id: string;
+};

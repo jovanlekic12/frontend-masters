@@ -1,19 +1,30 @@
 import { useSearchParams } from "react-router";
-import { fetchProductRequests } from "../../../../../api/product-reqs";
+import {
+  fetchProductRequests,
+  fetchUpvotes,
+} from "../../../../../api/product-reqs";
 import Loader from "../../../../../components/Loader";
 import { useCallback, useEffect, useState } from "react";
-import type { ProductReq } from "../../../../../utils/types";
+import type { ProductReq, Token } from "../../../../../utils/types";
 import { useInfiniteScroll } from "../../../../../hooks/useInfiniteScroll";
 import ProductReqItem from "../../../../../components/ui/ReqItem";
 
 const PAGE_SIZE = 10;
-
 export default function ProductsList() {
   const [params] = useSearchParams();
   const [reqs, setReqs] = useState<ProductReq[]>([]);
+  const [upvotes, setUpvotes] = useState([]);
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+
+  useEffect(() => {
+    const getUpvotes = async () => {
+      const data = await fetchUpvotes();
+      setUpvotes(data);
+    };
+    getUpvotes();
+  }, []);
 
   useEffect(() => {
     setReqs([]);
@@ -39,11 +50,12 @@ export default function ProductsList() {
     isLoading,
     hasMore,
   });
+  console.log(upvotes);
   return (
     <ul className="flex flex-col list-none gap-7 mt-5">
       {reqs &&
         reqs.map((req) => {
-          return <ProductReqItem {...req} />;
+          return <ProductReqItem {...req} upvotedFeedbacks={upvotes} />;
         })}
       {isLoading && <Loader />}
       <div ref={sentinelRef} style={{ height: "1px" }} />
