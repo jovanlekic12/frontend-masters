@@ -136,7 +136,7 @@ export const toogleUpvoteFeedback = async (feedbackId: string) => {
       console.error(fetchError);
       return;
     }
-    if (existing) {
+    if (!existing) {
       const { error } = await supabase.from("upvotes").insert([
         {
           feedback_id: feedbackId,

@@ -8,9 +8,11 @@ import { useCallback, useEffect, useState } from "react";
 import type { ProductReq, Token } from "../../../../../utils/types";
 import { useInfiniteScroll } from "../../../../../hooks/useInfiniteScroll";
 import ProductReqItem from "../../../../../components/ui/ReqItem";
-
+type Props = {
+  token: Token;
+};
 const PAGE_SIZE = 10;
-export default function ProductsList() {
+export default function ProductsList({ token }: Props) {
   const [params] = useSearchParams();
   const [reqs, setReqs] = useState<ProductReq[]>([]);
   const [upvotes, setUpvotes] = useState([]);
@@ -55,7 +57,9 @@ export default function ProductsList() {
     <ul className="flex flex-col list-none gap-7 mt-5">
       {reqs &&
         reqs.map((req) => {
-          return <ProductReqItem {...req} upvotedFeedbacks={upvotes} />;
+          return (
+            <ProductReqItem {...req} upvotedFeedbacks={upvotes} token={token} />
+          );
         })}
       {isLoading && <Loader />}
       <div ref={sentinelRef} style={{ height: "1px" }} />

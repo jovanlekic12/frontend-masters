@@ -14,7 +14,7 @@ export default function Main({ setToken, token, setIsFormOpened }: Props) {
         token={token}
         setIsFormOpened={setIsFormOpened}
       />
-      <ProductsList />
+      <ProductsList token={token} />
     </section>
   );
 }

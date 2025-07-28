@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 type ProductReqItemProps = ProductReq & {
+  token?: Token;
   upvotedFeedbacks: upvotedFeedback[];
 };
 
@@ -17,11 +18,12 @@ export default function ProductReqItem({
   category,
   comments,
   upvotedFeedbacks,
+  token,
 }: ProductReqItemProps) {
   const [isUpvoted, setIsUpvoted] = useState(false);
-
+  const [upvotesCounter, setUpvotesCounter] = useState(upvotes);
   useEffect(() => {
-    if (upvotedFeedbacks) {
+    if (upvotedFeedbacks && token) {
       const contains = upvotedFeedbacks.some(
         (feedback) => feedback.feedback_id === id
       );
@@ -29,29 +31,38 @@ export default function ProductReqItem({
     }
   }, [upvotedFeedbacks]);
 
-  async function handleUpvote() {
-    if (isUpvoted) {
-      await toogleUpvoteFeedback(id);
-      await handleDecrement();
-    } else {
-      await toogleUpvoteFeedback(id);
-      await handleIncrement();
+  async function handleClick() {
+    if (!token) {
+      toast.error("Please login");
+      return;
+    }
+
+    const delta = isUpvoted ? -1 : 1;
+    const newIsUpvoted = !isUpvoted;
+
+    setIsUpvoted(newIsUpvoted);
+    setUpvotesCounter((prev) => prev + delta);
+
+    try {
+      await handleVoteChange(delta);
+    } catch (err) {
+      setIsUpvoted(isUpvoted);
+      setUpvotesCounter((prev) => prev - delta);
+      toast.error("Vote update failed");
     }
   }
 
-  async function handleIncrement() {
-    await feedbackUpvote(id, upvotes + 1);
-  }
-  async function handleDecrement() {
-    await feedbackUpvote(id, upvotes - 1);
+  async function handleVoteChange(delta: number) {
+    await feedbackUpvote(id, upvotes + delta);
+    await toogleUpvoteFeedback(id);
   }
 
   return (
-    <li className="flex items-center w-full justify-between px-5 py-2">
+    <li className="flex items-center w-full justify-between px-5 py-2 cursor-pointer">
       <div className="flex items-center gap-4">
-        <Button type="upvote" onClick={handleUpvote} isActive={isUpvoted}>
+        <Button type="upvote" onClick={handleClick} isActive={isUpvoted}>
           <FaAngleUp className="text-blue-600" />
-          <h5 className="text-black font-bold text-base">{upvotes}</h5>
+          <h5 className="text-black font-bold text-base">{upvotesCounter}</h5>
         </Button>
         <div className="flex flex-col items-start">
           <h5 className="text-black font-bold text-lg">{title}</h5>

@@ -39,6 +39,7 @@ export default function Header({ setToken, token, setIsFormOpened }: Props) {
       console.error("Logout error:", error.message);
     } finally {
       setIsLoading(false);
+      window.location.reload();
     }
   };
 

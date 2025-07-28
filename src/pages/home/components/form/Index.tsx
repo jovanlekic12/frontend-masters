@@ -61,7 +61,7 @@ export default function FeedbackForm({ setIsFormOpened, isFormOpened }: Props) {
       console.error(error, "Error adding new feedback");
     } else {
       reset();
-      setIsFormOpened(false);
+      window.location.reload();
     }
   };
   return (
