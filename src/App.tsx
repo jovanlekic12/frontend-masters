@@ -4,6 +4,7 @@ import Home from "@/pages/home/Index";
 import { useEffect, useState } from "react";
 import { Token } from "./utils/types";
 import { supabase } from "./supabase/supabase";
+import Feedback from "./pages/feedback/Index";
 
 function App() {
   const [token, setToken] = useState<Token | null>(null);
@@ -41,6 +42,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home setToken={setToken} token={token} />} />
+        <Route path="product/:id" element={<Feedback />} />
       </Routes>
     </BrowserRouter>
   );

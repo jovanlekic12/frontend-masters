@@ -37,6 +37,23 @@ export const fetchProductRequests = async (
   return data as ProductReq[];
 };
 
+export const fetchSingleFeedback = async (id: string): Promise<ProductReq> => {
+  try {
+    const { data: feedback, error } = await supabase
+      .from("product-requests")
+      .select("*,comments(*,replies(*,users(*)),users(*))")
+      .eq("id", id)
+      .single();
+    if (error) {
+      console.error(error);
+      return;
+    }
+    return feedback;
+  } catch (err) {
+    console.error("something went wrong", err);
+  }
+};
+
 export const fetchFilters = async (): Promise<string[]> => {
   const { data: reqs, error } = await supabase
     .from("product-requests")

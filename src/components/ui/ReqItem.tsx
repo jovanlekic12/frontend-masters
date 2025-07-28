@@ -4,6 +4,7 @@ import Button from "./Button";
 import { feedbackUpvote, toogleUpvoteFeedback } from "@/api/product-reqs";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { Link } from "react-router";
 
 type ProductReqItemProps = ProductReq & {
   token?: Token;
@@ -58,14 +59,19 @@ export default function ProductReqItem({
   }
 
   return (
-    <li className="flex items-center w-full justify-between px-5 py-2 cursor-pointer">
+    <li className="flex items-center w-full justify-between px-5 py-2">
       <div className="flex items-center gap-4">
         <Button type="upvote" onClick={handleClick} isActive={isUpvoted}>
           <FaAngleUp className="text-blue-600" />
           <h5 className="text-black font-bold text-base">{upvotesCounter}</h5>
         </Button>
         <div className="flex flex-col items-start">
-          <h5 className="text-black font-bold text-lg">{title}</h5>
+          <Link
+            className="text-black font-bold text-lg hover:text-blue-600"
+            to={`product/${id}`}
+          >
+            {title}
+          </Link>
           <p>{description}</p>
           <span className="capitalize text-blue-600 font-semibold">
             {category}
