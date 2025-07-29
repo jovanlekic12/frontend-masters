@@ -1,0 +1,25 @@
+import { Comment, Token } from "@/utils/types";
+import CommentItem from "./Item/Index";
+
+type Props = {
+  comments: Comment[];
+  token?: Token;
+};
+
+export default function CommentsSection({ comments }: Props) {
+  console.log(comments);
+  return (
+    <div className="mt-10">
+      <h2 className="font-semibold">
+        {comments.length} {comments.length === 1 ? "Comment" : "Comments"}
+      </h2>
+      {comments && (
+        <ul className="mt-5 flex flex-col gap-5">
+          {comments.map((comment) => {
+            return <CommentItem {...comment} />;
+          })}
+        </ul>
+      )}
+    </div>
+  );
+}

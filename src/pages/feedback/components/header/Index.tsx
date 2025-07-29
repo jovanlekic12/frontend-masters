@@ -52,18 +52,23 @@ export default function Header({ token, setToken }: LogInProps) {
         Back
         <IoReturnDownBackSharp />
       </Link>
-      {!token ? (
+      {!token && (
         <Button type="secondary" onClick={SetUser}>
           <FcGoogle />
           Login
         </Button>
-      ) : (
+      )}
+      {token && (
         <div className="flex items-center gap-10">
           <div className="flex items-center gap-2">
             <img
               src={token.user.user_metadata.avatar_url}
               alt="avatar photo"
               className="rounded-full w-12"
+              onError={(e) => {
+                (e.target as HTMLImageElement).src =
+                  "https://ufcfeqrveeyzpruffbba.supabase.co/storage/v1/object/public/user-photos//default-avatar.jpg";
+              }}
             />
             <h4 className="font-semibold">
               {token.user.user_metadata.full_name}

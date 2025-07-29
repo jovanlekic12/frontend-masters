@@ -21,7 +21,7 @@ export type Comment = {
   id: string;
   product_id: number;
   content: string;
-  user: MyUser;
+  users: MyUser;
   replies?: Reply[];
 };
 
