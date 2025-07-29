@@ -6,7 +6,6 @@ export async function logInUser() {
       provider: "google",
     });
     if (error) console.error("OAuth error:", error.message);
-
     return { data, error };
   } catch (err) {
     console.error("Unexpected error:", err);

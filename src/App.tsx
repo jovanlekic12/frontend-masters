@@ -42,7 +42,10 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route index element={<Home setToken={setToken} token={token} />} />
-        <Route path="product/:id" element={<Feedback />} />
+        <Route
+          path="product/:id"
+          element={<Feedback token={token} setToken={setToken} />}
+        />
       </Routes>
     </BrowserRouter>
   );

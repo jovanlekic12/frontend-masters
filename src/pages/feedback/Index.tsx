@@ -1,9 +1,10 @@
 import { fetchSingleFeedback } from "@/api/product-reqs";
-import { ProductReq } from "@/utils/types";
+import { LogInProps, ProductReq, Token } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
+import Header from "./components/header/Index";
 
-export default function Feedback() {
+export default function Feedback({ token, setToken }: LogInProps) {
   let params = useParams();
   const [feedback, setFeedback] = useState<ProductReq>();
   useEffect(() => {
@@ -15,5 +16,9 @@ export default function Feedback() {
   }, []);
   console.log(feedback);
 
-  return <main></main>;
+  return (
+    <main className="max-w-7xl m-20 mx-auto flex flex-col gap-10 px-5">
+      <Header token={token} setToken={setToken} />
+    </main>
+  );
 }
