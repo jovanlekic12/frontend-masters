@@ -1,13 +1,16 @@
 import { Comment, Token } from "@/utils/types";
 import CommentItem from "./Item/Index";
+import Form from "./form/Index";
+import { TbH1 } from "react-icons/tb";
 
 type Props = {
   comments: Comment[];
   token?: Token;
 };
 
-export default function CommentsSection({ comments }: Props) {
-  console.log(comments);
+export default function CommentsSection({ token, comments }: Props) {
+  const username = token?.user.email.split("@")[0];
+
   return (
     <div className="mt-10">
       <h2 className="font-semibold">
@@ -20,6 +23,7 @@ export default function CommentsSection({ comments }: Props) {
           })}
         </ul>
       )}
+      <Form username={username} />
     </div>
   );
 }

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Header from "./components/header/Index";
 import ProductReqItem from "@/components/ui/ReqItem";
-import { toast } from "react-toastify";
+import { Slide, toast, ToastContainer } from "react-toastify";
 import CommentsSection from "./components/comments/Index";
 
 export default function Feedback({ token, setToken }: LogInProps) {
@@ -44,9 +44,19 @@ export default function Feedback({ token, setToken }: LogInProps) {
             upvotedFeedbacks={upvotesCounter}
             token={token}
           />
-          <CommentsSection comments={comments} />
+          <CommentsSection comments={comments} token={token} />
         </section>
       )}
+      <ToastContainer
+        toastClassName="custom-toast"
+        position="top-center"
+        progressClassName="custom-progress"
+        autoClose={3000}
+        hideProgressBar={false}
+        closeOnClick
+        pauseOnHover
+        transition={Slide}
+      />
     </main>
   );
 }

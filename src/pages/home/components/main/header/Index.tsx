@@ -56,7 +56,9 @@ export default function Header({ setToken, token, setIsFormOpened }: Props) {
   async function SetUser() {
     setIsLoading(true);
     try {
-      const { error } = await logInUser();
+      const { data, error } = await logInUser();
+      console.log(data, "login");
+
       if (error) {
         console.error("Login failed:", error.message);
       }
