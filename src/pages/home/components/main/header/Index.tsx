@@ -16,8 +16,6 @@ export default function Header({ setToken, token, setIsFormOpened }: Props) {
   const sorts = [
     { label: "Most likes", value: "likes-desc" },
     { label: "Least likes", value: "likes-asc" },
-    { label: "Most comments", value: "comments-desc" },
-    { label: "Least comments", value: "comments-asc" },
   ];
 
   const [params] = useSearchParams();
@@ -68,12 +66,12 @@ export default function Header({ setToken, token, setIsFormOpened }: Props) {
   }
 
   return (
-    <header className="rounded-2xl bg-blue-600 flex items-center justify-between py-6 px-5 text-white ">
+    <header className="rounded-2xl bg-blue-600 flex items-center flex-col gap-2  sm:flex-row justify-between py-6 px-5 text-white ">
       <div className="flex items-center gap-2.5">
         <MdOutlineLightbulb className="text-xl" />
-        <h4 className="text-lg font-medium">Suggestions</h4>
+        <h4 className="text-sm font-medium sm:text-lg">Suggestions</h4>
         <div className="flex items-center gap-2.5">
-          <h4 className="text-lg font-medium">Sort by:</h4>
+          <h4 className="font-medium sm:text-lg">Sort by:</h4>
           <select
             className="text-lg"
             onChange={(e) => handleSortChange(e.target.value, "sortBy")}

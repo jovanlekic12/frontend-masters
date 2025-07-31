@@ -40,7 +40,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
   return (
     <div
       ref={ref}
-      className={`fixed rounded-xl bg-white px-5 py-10 top-1/2 left-1/2 z-99 transform ${
+      className={`fixed rounded-xl w-9/10 sm:w-fit bg-white px-5 py-10 top-1/2 left-1/2 z-99 transform ${
         isOpened
           ? "translate-x-[-50%] translate-y-[-50%]"
           : "translate-x-[500%] translate-y-[-50%]"
