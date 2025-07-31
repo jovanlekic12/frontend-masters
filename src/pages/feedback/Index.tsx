@@ -1,5 +1,5 @@
 import { fetchSingleFeedback, fetchUpvotes } from "@/api/product-reqs";
-import { Comment, LogInProps, ProductReq, Token } from "@/utils/types";
+import { Comment, LogInProps, ProductReq } from "@/utils/types";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import Header from "./components/header/Index";
@@ -43,6 +43,7 @@ export default function Feedback({ token, setToken }: LogInProps) {
             isLoading={isLoading}
             upvotedFeedbacks={upvotesCounter}
             token={token}
+            single={true}
           />
           <CommentsSection comments={comments} token={token} />
         </section>

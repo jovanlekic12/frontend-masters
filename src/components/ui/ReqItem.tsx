@@ -11,6 +11,7 @@ type ProductReqItemProps = ProductReq & {
   token?: Token;
   upvotedFeedbacks: upvotedFeedback[];
   isLoading?: boolean;
+  single?: boolean;
 };
 
 export default function ProductReqItem({
@@ -23,6 +24,7 @@ export default function ProductReqItem({
   upvotedFeedbacks,
   token,
   isLoading,
+  single,
 }: ProductReqItemProps) {
   const [isUpvoted, setIsUpvoted] = useState(false);
   const [upvotesCounter, setUpvotesCounter] = useState(upvotes);
@@ -80,19 +82,25 @@ export default function ProductReqItem({
               </h5>
             </Button>
             <div className="flex flex-col items-start">
-              <Link
-                className="text-black font-bold text-lg hover:text-blue-600"
-                to={`product/${id}`}
-              >
-                {title}
-              </Link>
+              {single && (
+                <h1 className="text-black font-bold text-lg">{title}</h1>
+              )}
+              {!single && (
+                <Link
+                  className="text-black font-bold text-lg hover:text-blue-600"
+                  to={`product/${id}`}
+                >
+                  {title}
+                </Link>
+              )}
+
               <p>{description}</p>
               <span className="capitalize text-blue-600 font-semibold">
                 {category}
               </span>
             </div>
           </div>
-          {comments && (
+          {comments && !single && (
             <div className="flex items-center gap-1 justify-self-end">
               <FaRegCommentDots />
               <span>{comments?.length}</span>

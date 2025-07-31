@@ -67,7 +67,7 @@ export default function Header({ token, setToken }: LogInProps) {
               className="rounded-full w-12"
               onError={(e) => {
                 (e.target as HTMLImageElement).src =
-                  "https://ufcfeqrveeyzpruffbba.supabase.co/storage/v1/object/public/user-photos//default-avatar.jpg";
+                  "https://static.vecteezy.com/system/resources/previews/018/765/757/original/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg";
               }}
             />
             <h4 className="font-semibold">

@@ -35,9 +35,11 @@ export default function Form({ username }: Props) {
   const onSubmit = async (data: Comment) => {
     if (!username) {
       toast.error("Please login");
+      reset();
+      setCounter(250);
       return;
     }
-    const error = await InsertComment(params.id, username, data.content);
+    const error = await InsertComment(params?.id, username, data.content);
     if (error) {
       console.error(error, "Error adding comment");
     } else {
