@@ -14,7 +14,7 @@ export type MyUser = {
 export type Reply = {
   content: string;
   replyingTo: string;
-  user: MyUser;
+  users: MyUser;
 };
 
 export type Comment = {

@@ -10,6 +10,7 @@ import z from "zod";
 
 type Props = {
   username?: string;
+  replyTo: string | null;
 };
 
 const commentShema = z.object({
@@ -19,7 +20,7 @@ const commentShema = z.object({
     .max(250, "Comment can not be longer than 250 characters"),
 });
 
-export default function Form({ username }: Props) {
+export default function Form({ username, replyTo }: Props) {
   let params = useParams();
   console.log(username);
   const [counter, setCounter] = useState(250);
@@ -50,7 +51,9 @@ export default function Form({ username }: Props) {
 
   return (
     <div className="mt-10">
-      <h2 className="font-bold">Add comment</h2>
+      <h2 className="font-bold">
+        {replyTo ? `Reply to user: ${replyTo}` : "Add comment"}
+      </h2>
       <form onSubmit={handleSubmit(onSubmit)}>
         <textarea
           {...register("content")}

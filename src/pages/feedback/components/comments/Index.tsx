@@ -1,7 +1,7 @@
 import { Comment, Token } from "@/utils/types";
 import CommentItem from "./Item/Index";
 import Form from "./form/Index";
-import { TbH1 } from "react-icons/tb";
+import { useState } from "react";
 
 type Props = {
   comments: Comment[];
@@ -10,7 +10,7 @@ type Props = {
 
 export default function CommentsSection({ token, comments }: Props) {
   const username = token?.user.email.split("@")[0];
-
+  const [replyTo, setReplyTo] = useState<string | null>(null);
   return (
     <div className="mt-10">
       <h2 className="font-semibold">
@@ -19,11 +19,13 @@ export default function CommentsSection({ token, comments }: Props) {
       {comments && (
         <ul className="mt-5 flex flex-col gap-5">
           {comments.map((comment) => {
-            return <CommentItem {...comment} />;
+            return (
+              <CommentItem {...comment} setReplyTo={setReplyTo} token={token} />
+            );
           })}
         </ul>
       )}
-      <Form username={username} />
+      <Form username={username} replyTo={replyTo} />
     </div>
   );
 }
