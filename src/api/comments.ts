@@ -20,3 +20,24 @@ export const InsertComment = async (
   }
   return error;
 };
+
+export const InsertReply = async (
+  commentId: string,
+  content: string,
+  username: string,
+  replyingTo: string
+) => {
+  const { error } = await supabase.from("replies").insert([
+    {
+      comment_id: commentId,
+      content: content,
+      username: username,
+      replyingTo: replyingTo,
+    },
+  ]);
+  if (error) {
+    console.error("Error replying to user", error);
+    toast.error("Something went wrong.");
+  }
+  return error;
+};

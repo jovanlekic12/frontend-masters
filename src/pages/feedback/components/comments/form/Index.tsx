@@ -1,4 +1,4 @@
-import { InsertComment } from "@/api/comments";
+import { InsertComment, InsertReply } from "@/api/comments";
 import Button from "@/components/ui/Button";
 import { Comment } from "@/utils/types";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import z from "zod";
 type Props = {
   username?: string;
   replyTo: string | null;
+  commentId: string;
 };
 
 const commentShema = z.object({
@@ -20,14 +21,14 @@ const commentShema = z.object({
     .max(250, "Comment can not be longer than 250 characters"),
 });
 
-export default function Form({ username, replyTo }: Props) {
+export default function Form({ username, replyTo, commentId }: Props) {
   let params = useParams();
   console.log(username);
   const [counter, setCounter] = useState(250);
   const {
     register,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { errors },
     reset,
   } = useForm({
     resolver: zodResolver(commentShema),
@@ -40,13 +41,24 @@ export default function Form({ username, replyTo }: Props) {
       setCounter(250);
       return;
     }
-    const error = await InsertComment(params?.id, username, data.content);
-    if (error) {
-      console.error(error, "Error adding comment");
+    if (replyTo && commentId) {
+      const error = await InsertReply(
+        commentId,
+        data.content,
+        username,
+        replyTo
+      );
+      if (error) {
+        toast.error("Error adding reply");
+      }
     } else {
-      reset();
-      window.location.reload();
+      const error = await InsertComment(params?.id, username, data.content);
+      if (error) {
+        toast.error("Error adding comment");
+      }
     }
+    reset();
+    window.location.reload();
   };
 
   return (
@@ -69,7 +81,7 @@ export default function Form({ username, replyTo }: Props) {
         <div className="mt-5 flex items-center justify-between">
           <p className="font-medium">{counter} characters left</p>
           <Button type="primary">
-            {isSubmitting ? "Posting comment..." : "Post Comment"}
+            {replyTo ? "Post Reply" : "Post Comment"}
           </Button>
         </div>
       </form>
