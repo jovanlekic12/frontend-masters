@@ -6,6 +6,7 @@ import Header from "./components/header/Index";
 import ProductReqItem from "@/components/ui/ReqItem";
 import { Slide, toast, ToastContainer } from "react-toastify";
 import CommentsSection from "./components/comments/Index";
+import { SeenNotifications } from "@/api/comments";
 
 export default function Feedback({ token, setToken }: LogInProps) {
   let params = useParams();
@@ -31,7 +32,20 @@ export default function Feedback({ token, setToken }: LogInProps) {
     };
     getData();
   }, []);
-  console.log(feedback);
+
+  useEffect(() => {
+    const ReadNotifications = async () => {
+      const username = token?.user.email.split("@")[0];
+      try {
+        await SeenNotifications(username, params.id);
+      } catch (error) {
+        toast.error("Something went wrong");
+        console.error();
+      }
+    };
+
+    if (token) ReadNotifications();
+  }, []);
 
   return (
     <main className="max-w-7xl m-20 mx-auto flex flex-col gap-10 px-5">

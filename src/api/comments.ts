@@ -52,14 +52,23 @@ export const CheckForTags = async (userUsername: string): Promise<Reply[]> => {
     toast.error("Error getting tags");
     console.error(error);
   }
-  data?.map((tag) => {
-    toast.info(
-      `${tag.username} tagged you at ${
-        userUsername === tag.comments.username
-          ? "your comment " + "'" + tag.comments.content + "'"
-          : tag.comments.username + "comment"
-      }`
-    );
-  });
+
   return data;
+};
+
+export const SeenNotifications = async (
+  userUsername: string,
+  productId: string
+) => {
+  const { data, error } = await supabase
+    .from("replies")
+    .update({ seen: true })
+    .eq("product_id", productId)
+    .eq("replyingTo", userUsername)
+    .eq("seen", false);
+  if (error) {
+    toast.error("Error getting tags");
+    console.error(error);
+  }
+  return error;
 };
