@@ -1,5 +1,5 @@
 import { supabase } from "@/supabase/supabase";
-import { Comment } from "@/utils/types";
+import { Comment, Reply } from "@/utils/types";
 import { toast } from "react-toastify";
 
 export const InsertComment = async (
@@ -40,4 +40,26 @@ export const InsertReply = async (
     toast.error("Something went wrong.");
   }
   return error;
+};
+
+export const CheckForTags = async (userUsername: string): Promise<Reply[]> => {
+  const { data, error } = await supabase
+    .from("replies")
+    .select("*,comments(content,username),users(image)")
+    .eq("replyingTo", userUsername)
+    .eq("seen", false);
+  if (error) {
+    toast.error("Error getting tags");
+    console.error(error);
+  }
+  data?.map((tag) => {
+    toast.info(
+      `${tag.username} tagged you at ${
+        userUsername === tag.comments.username
+          ? "your comment " + "'" + tag.comments.content + "'"
+          : tag.comments.username + "comment"
+      }`
+    );
+  });
+  return data;
 };

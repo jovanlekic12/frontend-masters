@@ -11,7 +11,7 @@ export default function Home({ setToken, token }: LogInProps) {
   const [isFormOpened, setIsFormOpened] = useState(false);
 
   return (
-    <main className="max-w-7xl m-20 mx-auto flex flex-col gap-10 px-5 xl:grid xl:grid-cols-[300px_minmax(900px,_1fr)]">
+    <main className="max-w-7xl m-10 mx-auto flex flex-col gap-10 px-5 xl:grid xl:grid-cols-[300px_minmax(900px,_1fr)]">
       <SideBar />
       <Main
         setToken={setToken}

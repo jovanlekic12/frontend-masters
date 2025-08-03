@@ -6,6 +6,8 @@ import { Token } from "./utils/types";
 import { supabase } from "./supabase/supabase";
 import Feedback from "./pages/feedback/Index";
 import { InsertUser } from "./api/login";
+import { CheckForTags } from "./api/comments";
+import { toast } from "react-toastify";
 
 function App() {
   const [token, setToken] = useState<Token | null>(null);
@@ -13,13 +15,13 @@ function App() {
   useEffect(() => {
     if (token) {
       sessionStorage.setItem("token", JSON.stringify(token));
+
       const setUser = async () => {
-        const username = token.user.email.split("@")[0];
-        const { data: existing, error } = await supabase
+        const username = token?.user.email.split("@")[0];
+        const { data: existing } = await supabase
           .from("users")
           .select("*")
           .eq("username", token.user.user_metadata.name);
-
         if (existing) {
           return;
         } else {
@@ -30,6 +32,7 @@ function App() {
           );
         }
       };
+
       setUser();
     }
   }, [token]);
@@ -56,7 +59,7 @@ function App() {
       subscription.unsubscribe();
     };
   }, []);
-  console.log(token);
+
   return (
     <BrowserRouter>
       <Routes>

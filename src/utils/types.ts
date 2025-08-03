@@ -15,6 +15,7 @@ export type Reply = {
   content: string;
   replyingTo: string;
   users: MyUser;
+  product_id: string;
 };
 
 export type Comment = {
