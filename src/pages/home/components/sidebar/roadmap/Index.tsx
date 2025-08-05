@@ -93,7 +93,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
           <div className="flex items-center justify-between">
             <h6 className="font-semibold">Roadmap</h6>
             <Link
-              to="login"
+              to="roadmap"
               className="text-blue-600 hover:underline cursor-pointer"
             >
               View

@@ -8,6 +8,7 @@ import Feedback from "./pages/feedback/Index";
 import { InsertUser } from "./api/login";
 import { CheckForTags } from "./api/comments";
 import { toast } from "react-toastify";
+import Roadmap from "./pages/roadmap/Index";
 
 function App() {
   const [token, setToken] = useState<Token | null>(null);
@@ -67,6 +68,10 @@ function App() {
         <Route
           path="product/:id"
           element={<Feedback token={token} setToken={setToken} />}
+        />
+        <Route
+          path="roadmap"
+          element={<Roadmap token={token} setToken={setToken} />}
         />
       </Routes>
     </BrowserRouter>
