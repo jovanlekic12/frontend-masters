@@ -1,18 +1,17 @@
-import { useSearchParams } from "react-router";
-import {
-  fetchProductRequests,
-  fetchUpvotes,
-} from "../../../../../api/product-reqs";
-import Loader from "../../../../../components/Loader";
+import { fetchProductRequests, fetchUpvotes } from "@/api/product-reqs";
+import { useInfiniteScroll } from "@/hooks/useInfiniteScroll";
+import { ProductReq, Token } from "@/utils/types";
 import { useCallback, useEffect, useState } from "react";
-import type { ProductReq, Token } from "../../../../../utils/types";
-import { useInfiniteScroll } from "../../../../../hooks/useInfiniteScroll";
-import ProductReqItem from "../../../../../components/ui/ReqItem";
+import { useSearchParams } from "react-router";
+import ProductReqItem from "./ReqItem";
+import Loader from "../Loader";
+
 type Props = {
   token: Token;
+  searchTerm?: string;
 };
 const PAGE_SIZE = 10;
-export default function ProductsList({ token }: Props) {
+export default function ProductsList({ token, searchTerm }: Props) {
   const [params] = useSearchParams();
   const [reqs, setReqs] = useState<ProductReq[]>([]);
   const [upvotes, setUpvotes] = useState([]);
@@ -32,12 +31,17 @@ export default function ProductsList({ token }: Props) {
     setReqs([]);
     setPage(0);
     setHasMore(true);
-  }, [params]);
+  }, [params, searchTerm]);
 
   const loadMore = useCallback(async () => {
     if (isLoading || !hasMore) return;
     setIsLoading(true);
-    const newItems = await fetchProductRequests(params, page, PAGE_SIZE);
+    const newItems = await fetchProductRequests(
+      params,
+      page,
+      PAGE_SIZE,
+      searchTerm
+    );
 
     setReqs((prev) => (page === 0 ? newItems : [...prev, ...newItems]));
     setPage((prev) => prev + 1);
@@ -52,7 +56,6 @@ export default function ProductsList({ token }: Props) {
     isLoading,
     hasMore,
   });
-  console.log(upvotes);
   return (
     <ul className="flex flex-col list-none gap-7 mt-5">
       {reqs &&

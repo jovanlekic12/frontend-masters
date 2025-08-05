@@ -5,16 +5,26 @@ import { toast } from "react-toastify";
 export const fetchProductRequests = async (
   params: URLSearchParams,
   page: number,
-  pageSize: number
+  pageSize: number,
+  searchTerm?: string
 ): Promise<ProductReq[]> => {
   let query = supabase
     .from("product-requests")
     .select("*,comments(id)")
     .range(page * pageSize, page * pageSize + pageSize - 1);
 
+  if (searchTerm) {
+    query = query.ilike("title", `%${searchTerm}%`);
+  }
+
   const category = params.get("category");
   if (category !== "all" && category) {
     query = query.eq("category", category);
+  }
+
+  const filter = params.get("status");
+  if (filter) {
+    query = query.eq("status", filter);
   }
 
   const sort = params.get("sortBy");

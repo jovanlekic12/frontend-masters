@@ -3,9 +3,9 @@ import Main from "./components/main/Index";
 import SideBar from "./components/sidebar/Index";
 import { createPortal } from "react-dom";
 import { useState } from "react";
-import FeedbackForm from "./components/form/Index";
 import Overlay from "@/components/ui/Overlay";
 import { Slide, ToastContainer } from "react-toastify";
+import FeedbackForm from "@/components/ui/FeedbackForm";
 
 export default function Home({ setToken, token }: LogInProps) {
   const [isFormOpened, setIsFormOpened] = useState(false);

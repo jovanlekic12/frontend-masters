@@ -2,15 +2,23 @@ import { logInUser } from "@/api/login";
 import Button from "@/components/ui/Button";
 import { supabase } from "@/supabase/supabase";
 import { LogInProps } from "@/utils/types";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
+import { IoSearch } from "react-icons/io5";
 import { MdOutlineLightbulb } from "react-icons/md";
-
+import debounce from "lodash.debounce";
 type Props = LogInProps & {
   setIsFormOpened: (isFormOpened: boolean) => void;
+  searchTerm: string;
+  setSearchTerm: (search: string) => void;
 };
 
-export default function Header({ setToken, token, setIsFormOpened }: Props) {
+export default function Header({
+  token,
+  setIsFormOpened,
+  searchTerm,
+  setSearchTerm,
+}: Props) {
   const [isLoading, setIsLoading] = useState(false);
 
   async function SetUser() {
@@ -27,12 +35,23 @@ export default function Header({ setToken, token, setIsFormOpened }: Props) {
     }
   }
 
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(event.target.value);
+  };
+  const debouncedSearch = useCallback(debounce(handleSearchChange, 300), []);
+  console.log(searchTerm);
   return (
     <header className="rounded-2xl bg-blue-600 flex items-center flex-col gap-2  sm:flex-row justify-between py-6 px-5 text-white ">
       <div className="flex items-center gap-2.5">
-        <h4 className="text-sm font-medium sm:text-lg">Suggestions</h4>
-        <div className="flex items-center gap-2.5">
-          <h4 className="font-medium sm:text-lg">Sort by:</h4>
+        <h4 className="text-sm font-medium sm:text-lg">Roadmap</h4>
+        <div className="relative">
+          <input
+            type="text"
+            className="border-2 border-solid rounded-lg h-8 px-2 pr-8 placeholder-white focus:outline-0"
+            placeholder="Search..."
+            onChange={debouncedSearch}
+          />
+          <IoSearch className="absolute top-[50%] right-2 translate-y-[-50%] w-5 h-5" />
         </div>
       </div>
       {!token && (

@@ -1,12 +1,12 @@
 import { fetchFilters, InsertFeedback } from "@/api/product-reqs";
-import Button from "@/components/ui/Button";
+import { useOutsideClick } from "@/hooks/useClickOutside";
+import { ProductReq } from "@/utils/types";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
-import { ImCross } from "react-icons/im";
 import z from "zod";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { ProductReq } from "@/utils/types";
-import { useOutsideClick } from "@/hooks/useClickOutside";
+import Button from "./Button";
+import { ImCross } from "react-icons/im";
 
 type Props = {
   setIsFormOpened: (isOpened: boolean) => void;
