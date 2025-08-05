@@ -6,7 +6,7 @@ export async function logInUser() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://frontend-masters-v1eh.vercel.app/",
+        redirectTo: window.location.origin,
       },
     });
     if (error) console.error("OAuth error:", error.message);
