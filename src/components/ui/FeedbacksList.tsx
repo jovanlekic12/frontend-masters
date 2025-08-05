@@ -18,7 +18,6 @@ export default function ProductsList({ token, searchTerm }: Props) {
   const [page, setPage] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
-
   useEffect(() => {
     const getUpvotes = async () => {
       const data = await fetchUpvotes();
@@ -61,7 +60,12 @@ export default function ProductsList({ token, searchTerm }: Props) {
       {reqs &&
         reqs.map((req) => {
           return (
-            <ProductReqItem {...req} upvotedFeedbacks={upvotes} token={token} />
+            <ProductReqItem
+              {...req}
+              upvotedFeedbacks={upvotes}
+              token={token}
+              key={req.id}
+            />
           );
         })}
       {isLoading && <Loader />}

@@ -61,7 +61,6 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
     };
     getNotifications();
   }, []);
-  console.log(notifications, "not");
   return (
     <div
       ref={ref}
@@ -77,6 +76,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
         {filters?.map((filter: string) => {
           return (
             <Button
+              key={filter}
               onClick={() => {
                 handleFilterChange(filter);
               }}
@@ -103,7 +103,10 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
             {roadmap &&
               roadmap.map((item: Roadmap) => {
                 return (
-                  <li className="flex items-center justify-between">
+                  <li
+                    className="flex items-center justify-between"
+                    key={item.status}
+                  >
                     <div className="flex items-center gap-2">
                       <span className="text-blue-500 text-2xl">•</span>
                       <span className="text-lg capitalize">{item.status}</span>
@@ -166,7 +169,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
         </ul>
         {notifications.length === 0 && (
           <div className="w-full flex flex-col items-center mt-5">
-            <img src="./no-notification.png" alt="" />
+            <img src="./no-notification.png" alt="" className="w-40" />
             <h1 className="text-lg font-semibold text-purple-500">
               No new notifications
             </h1>

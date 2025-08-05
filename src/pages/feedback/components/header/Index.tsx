@@ -41,8 +41,6 @@ export default function Header({ token, setToken }: LogInProps) {
     }
   };
 
-  console.log(token);
-
   return (
     <header className="flex items-center justify-between">
       <Link

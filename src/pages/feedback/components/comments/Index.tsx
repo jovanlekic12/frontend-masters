@@ -22,6 +22,7 @@ export default function CommentsSection({ token, comments }: Props) {
           {comments.map((comment) => {
             return (
               <CommentItem
+                key={comment.id}
                 {...comment}
                 setReplyTo={setReplyTo}
                 token={token}

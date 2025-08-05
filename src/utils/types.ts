@@ -12,6 +12,7 @@ export type MyUser = {
 };
 
 export type Reply = {
+  id: string;
   content: string;
   replyingTo: string;
   users: MyUser;

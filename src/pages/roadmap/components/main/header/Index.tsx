@@ -1,11 +1,9 @@
 import { logInUser } from "@/api/login";
 import Button from "@/components/ui/Button";
-import { supabase } from "@/supabase/supabase";
 import { LogInProps } from "@/utils/types";
 import { useCallback, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { IoSearch } from "react-icons/io5";
-import { MdOutlineLightbulb } from "react-icons/md";
 import debounce from "lodash.debounce";
 type Props = LogInProps & {
   setIsFormOpened: (isFormOpened: boolean) => void;
@@ -24,9 +22,7 @@ export default function Header({
   async function SetUser() {
     setIsLoading(true);
     try {
-      const { data, error } = await logInUser();
-      console.log(data, "login");
-
+      const { error } = await logInUser();
       if (error) {
         console.error("Login failed:", error.message);
       }
@@ -39,7 +35,6 @@ export default function Header({
     setSearchTerm(event.target.value);
   };
   const debouncedSearch = useCallback(debounce(handleSearchChange, 300), []);
-  console.log(searchTerm);
   return (
     <header className="rounded-2xl bg-blue-600 flex items-center flex-col gap-2  sm:flex-row justify-between py-6 px-5 text-white ">
       <div className="flex items-center gap-2.5">

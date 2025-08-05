@@ -42,6 +42,7 @@ export default function Filters() {
         filters.map((filter) => {
           return (
             <button
+              key={filter.status}
               onClick={() => handleFilterChange(filter.status)}
               className={`bg-white ${
                 activeBtn === filter.status &&
@@ -49,6 +50,7 @@ export default function Filters() {
               } uppercase w-full py-3 font-semibold text-gray-700 text-lg cursor-pointer duration-200`}
             >
               {filter.status}
+              {` (${filter.count})`}
             </button>
           );
         })}

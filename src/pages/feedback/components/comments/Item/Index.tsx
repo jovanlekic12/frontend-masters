@@ -28,7 +28,6 @@ export default function CommentItem({
     setReplyTo(username ? username : users.username);
     setCommentId(id);
   }
-  console.log(replies, "replies");
   return (
     <div className="mb-5">
       <div className="flex items-center gap-3 border-b-2 border-gray-300 w-full pb-2">
@@ -50,7 +49,10 @@ export default function CommentItem({
         <ul className="px-10 bg-blue-50 py-2">
           {replies.map((reply) => {
             return (
-              <li className="flex items-center gap-3 border-b-2 border-gray-300 w-full pb-2">
+              <li
+                key={reply.id}
+                className="flex items-center gap-3 border-b-2 border-gray-300 w-full pb-2"
+              >
                 <img
                   src={reply.users.image}
                   alt=""

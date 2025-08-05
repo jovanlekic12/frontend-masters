@@ -23,7 +23,6 @@ const commentShema = z.object({
 
 export default function Form({ username, replyTo, commentId }: Props) {
   let params = useParams();
-  console.log(username);
   const [counter, setCounter] = useState(250);
   const {
     register,
