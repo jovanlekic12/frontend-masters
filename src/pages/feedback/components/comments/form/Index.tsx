@@ -78,10 +78,18 @@ export default function Form({ username, replyTo, commentId }: Props) {
           </p>
         )}
         <div className="mt-5 flex items-center justify-between">
-          <p className="font-medium">{counter} characters left</p>
-          <Button type="primary">
-            {replyTo ? "Post Reply" : "Post Comment"}
-          </Button>
+          <p className="font-medium sm:text-md text-sm">
+            {counter} characters left
+          </p>
+          {username ? (
+            <Button type="primary">
+              {replyTo ? "Post Reply" : "Post Comment"}
+            </Button>
+          ) : (
+            <h1 className="font-bold text-blue-500 sm:text-md text-sm">
+              Log in to start commenting!
+            </h1>
+          )}
         </div>
       </form>
     </div>

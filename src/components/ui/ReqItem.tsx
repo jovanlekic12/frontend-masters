@@ -73,35 +73,37 @@ export default function ProductReqItem({
     <>
       {isLoading && <Loader></Loader>}
       {!isLoading && (
-        <li className="flex items-center w-full justify-between px-5 py-2">
+        <li className="flex items-center w-full justify-between sm:px-5 px-2 py-2">
           <div className="flex items-center gap-4">
             <Button type="upvote" onClick={handleClick} isActive={isUpvoted}>
               <FaAngleUp className="text-blue-600" />
-              <h5 className="text-black font-bold text-base">
+              <h5 className="text-black font-bold sm:text-md text-sm">
                 {upvotesCounter}
               </h5>
             </Button>
             <div className="flex flex-col items-start">
               {single && (
-                <h1 className="text-black font-bold text-lg">{title}</h1>
+                <h1 className="text-black font-bold sm:text-lg text-md">
+                  {title}
+                </h1>
               )}
               {!single && (
                 <Link
-                  className="text-black font-bold text-lg hover:text-blue-600"
+                  className="text-black font-bold sm:text-lg text-md hover:text-blue-600"
                   to={`product/${id}`}
                 >
                   {title}
                 </Link>
               )}
 
-              <p>{description}</p>
-              <span className="capitalize text-blue-600 font-semibold">
+              <p className="sm:text-md text-sm">{description}</p>
+              <span className="capitalize text-blue-600 font-semibold sm:text-md text-sm">
                 {category}
               </span>
             </div>
           </div>
           {comments && !single && (
-            <div className="flex items-center gap-1 justify-self-end">
+            <div className="flex items-center gap-1 justify-self-end sm:text-md text-sm">
               <FaRegCommentDots />
               <span>{comments?.length}</span>
             </div>

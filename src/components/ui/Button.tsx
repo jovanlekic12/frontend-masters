@@ -27,7 +27,7 @@ function Button({
   isActive,
 }: ButtonProps) {
   const base =
-    " cursor-pointer text-md bg-purple-500 font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-purple-600 disabled:cursor-not-allowed disabled:bg-white disabled:border disabled:border-yellow-400";
+    " cursor-pointer sm:text-md text-sm bg-purple-500 font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-purple-600 disabled:cursor-not-allowed disabled:bg-white disabled:border disabled:border-yellow-400";
 
   const styles: Record<ButtonType, string> = {
     primary: base + " flex items-center gap-1 px-3 py-1.5 rounded-xl",

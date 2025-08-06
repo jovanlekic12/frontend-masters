@@ -68,20 +68,20 @@ export default function FeedbackForm({ setIsFormOpened, isFormOpened }: Props) {
     <div
       ref={ref}
       className="fixed px-5 py-15 bg-white z-50 top-1/2 left-1/2 transform 
-         translate-x-[-50%] translate-y-[-50%] rounded-2xl w-4/5 xl:w-200"
+         translate-x-[-50%] translate-y-[-50%] rounded-2xl w-8/9 xl:w-200"
     >
       <div className="mb-10 flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Create new feedback</h1>
+        <h1 className="xl:text-3xl text-xl font-bold">Create new feedback</h1>
         <Button type="round" onClick={() => setIsFormOpened(false)}>
           <ImCross />
         </Button>
       </div>
       <form className="px-5" onSubmit={handleSubmit(onSubmit)}>
         <div className="">
-          <label className="block text-lg font-medium text-gray-900">
+          <label className="block sm:text-lg text-md font-medium text-gray-900">
             Feedback Title
           </label>
-          <p className="text-sm text-gray-800">
+          <p className="sm:text-sm text-xs text-gray-800">
             Add a short, descriptive headline
           </p>
           <div className="mt-3">
@@ -100,10 +100,10 @@ export default function FeedbackForm({ setIsFormOpened, isFormOpened }: Props) {
           </div>
         </div>
         <div className="mt-7">
-          <label className="block text-lg font-medium text-gray-900">
+          <label className="block sm:text-lg text-md font-medium text-gray-900">
             Category
           </label>
-          <p className="text-sm text-gray-800">
+          <p className="sm:text-sm text-xs text-gray-800">
             Choose a category for your feedback
           </p>
           <div className="mt-3">
@@ -132,10 +132,10 @@ export default function FeedbackForm({ setIsFormOpened, isFormOpened }: Props) {
           </div>
         </div>
         <div className="mt-7">
-          <label className="block text-lg font-medium text-gray-900">
+          <label className="block sm:text-lg text-md font-medium text-gray-900">
             Feedback detail
           </label>
-          <p className="text-sm text-gray-800">
+          <p className="sm:text-sm text-xs text-gray-800">
             Include any specific comments on what should be improved, added,
             etc.
           </p>
