@@ -6,8 +6,6 @@ import { Token } from "./utils/types";
 import { supabase } from "./supabase/supabase";
 import Feedback from "./pages/feedback/Index";
 import { InsertUser } from "./api/login";
-import { CheckForTags } from "./api/comments";
-import { toast } from "react-toastify";
 import Roadmap from "./pages/roadmap/Index";
 
 function App() {

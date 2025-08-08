@@ -61,6 +61,7 @@ export default function SidebarRoadmap({ isOpened, setIsOpened }: Props) {
     };
     getNotifications();
   }, []);
+
   return (
     <div
       ref={ref}

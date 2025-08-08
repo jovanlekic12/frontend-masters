@@ -52,18 +52,18 @@ export default function Login({ token, setToken }: LogInProps) {
         <IoReturnDownBackSharp />
       </Link>
       {token && (
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-2 sm:gap-5 xl:gap-10">
           <div className="flex items-center gap-2">
             <img
               src={token.user.user_metadata.avatar_url}
               alt="avatar photo"
-              className="rounded-full w-12"
+              className="rounded-full xl:w-12 w-8"
               onError={(e) => {
                 (e.target as HTMLImageElement).src =
                   "https://static.vecteezy.com/system/resources/previews/018/765/757/original/user-profile-icon-in-flat-style-member-avatar-illustration-on-isolated-background-human-permission-sign-business-concept-vector.jpg";
               }}
             />
-            <h4 className="font-semibold">
+            <h4 className="font-semibold text-sm xl:text-md">
               {token.user.user_metadata.full_name}
             </h4>
           </div>
